@@ -33,26 +33,39 @@ require "docking_class.rb"
 
 describe "DockingStation" do
   let(:test_station) {DockingStation.new}
-  it "allows user to see a list of docked bikes" do
-    expect(test_station.bikes).to eq []
+#   it "allows user to see a list of docked bikes" do
+#     expect(test_station.bike).to eq bike
+#   end
+  describe '#release_bike' do
+    it 'releases a bike' do
+      bike = Bike.new
+      test_station.dock_bike(bike)
+      expect(test_station.release_bike).to eq bike
+    end
   end
 
-  it 'throws an error when user tries to release non-existent bike'  do
-    expect { test_station.release_bike }.to raise_error("No bikes available")
+  describe '#release_bike' do
+    it 'throws an error when user tries to release non-existent bike'  do
+      expect { test_station.release_bike }.to raise_error("No bikes available")
+    end
   end
 end
 
 describe DockingStation do
-  test_station = DockingStation.new
-  bike = Bike.new
-  it "allows you to dock a bike when the docking station is empty" do
-    expect(test_station.dock_bike(bike)).to eq bike
+  let(:test_station) {DockingStation.new}
+  describe "#dock" do
+    it 'docks something' do
+      bike = Bike.new
+      expect(subject.dock_bike(bike)).to eq bike
+    end
   end
 
   # test_station.dock_bike(Bike.new)
-
-  it "raises an error when trying to dock at a station which already has one bike" do
-    expect{test_station.dock_bike(Bike.new)}.to raise_error("The station is full")
+  describe "#dock" do
+    it "raises an error when trying to dock at a station which already has one bike" do
+      test_station.dock_bike(Bike.new)
+      expect{test_station.dock_bike(Bike.new)}.to raise_error("The station is full")
+    end
   end
 end
 
